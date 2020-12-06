@@ -1,0 +1,3 @@
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=simple_password
+POSTGRES_DB=simple-app

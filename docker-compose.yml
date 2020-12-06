@@ -21,7 +21,6 @@ services:
     stdin_open: true
     depends_on:
       - db
-      - redis
   webpacker:
     image: test-docker
     build:
