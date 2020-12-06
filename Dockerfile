@@ -14,7 +14,7 @@ RUN npm install -g yarn
 ENV APP_HOME /usr/src/app
 
 COPY Gemfile* $APP_HOME/
-COPY package.json yarn.lock $APP_HOME/
+COPY package.json $APP_HOME/
 
 WORKDIR $APP_HOME
 
