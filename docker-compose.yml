@@ -1,0 +1,52 @@
+version: '3.8'
+services:
+  web:
+    image: test-docker 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+      - node_modules:/usr/src/app/node_modules
+    env_file:
+      - .env/development/db
+      - .env/development/web
+      - .env/development/webpacker
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+    tty: true
+    stdin_open: true
+    depends_on:
+      - db
+      - redis
+  webpacker:
+    image: test-docker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./bin/webpack-dev-server
+    ports:
+      - '3035:3035'
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+      - node_modules:/usr/src/app/node_modules
+    env_file:
+      - .env/development/db
+      - .env/development/web
+    depends_on:
+      - db
+      - redis
+  db:
+    image: postgres:11.7
+    env_file: 
+      - .env/development/db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+volumes:
+  db_data:
+  gem_cache:
+  node_modules:
